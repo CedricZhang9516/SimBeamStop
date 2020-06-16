@@ -1,0 +1,60 @@
+1.- DESCRIPTION
+       - PHYSICS PROCESS:
+           mu+ ---> mylar layers x 7 ---> (Pb collimator) --> 9 mm thick SiO2(density of aerogel) block
+       - RANDOM SYSTEM:
+           std::srand(time(NULL)) --> CLHEP::RanluxEngine (rand(),4)  //4 is the luxary level
+       - CLASS STRUCTURE:
+	   • P00RunAction.cc
+	   • P00EventAction.cc
+	   • P00SteppingAction.cc
+	   • P00RunData.cc
+
+   Ntuple .root file are generated:
+   - tree1: (x,y,z) (mm)
+   - tree2: initial momentum (MeV/c)	  
+
+
+
+3.- RELEASE NOTE
+       - v2.0
+         • Current primary particle generator: fpParticleGun = new G4ParticleGun();
+       - v2.1
+         • Change the ROOT output from B4example to fit our aerogel simulation.
+       - v2.2
+         • Add selection: only write the muon track data into .root file.
+       - v2.4
+         • Add selection: exclude those events where muon stopped before hitting aerogel.
+         • Add plot: "Number of muon" vs "z length of muon traveled inside aerogel".
+       - v2.5
+         • Code cleaning;
+         • Ignore events that muon didn't hit aerogel: Tweek in P00RunData.cc, if edep==0, 
+           return;
+       - v2.6
+         • Add shell script "runnOutput.sh" to carry on both G4 run and root output automatically.
+       - v2.7
+         • Primary data output into .root file changed to xPosition, yPosition, zPosition 
+           distributions.
+       - v2.8
+         • Rewrite .root output code. data is stored in ntuple format.
+         • FIX the problem that mu+ flying out of aerogel would also be recorded.
+         • edep (energy deposit) is now not recording the real energy deposit, but just a bool 
+           value for filtering out mu+ that didn't enter aerogel. (see P00SteppingAction.cc for 
+           detail)
+         • .root file now stores data as below: 
+           1)  (x,y,z) position of stopped mu+
+           2)  momentum distribution of initial mu+ beam. 
+            (currently is still a fixed number because we did not include the G4Paritcle Source)
+       - v2.9
+         • add analysis.C root macro to draw histograms (c1.pdf, c1.png) from P00RawData.root file.
+         • add momentumScan.sh script to do momentum scan easily, all files will be saved under the directory of momentumScan/
+         • add random number generation for every first run.
+         • add accumulateRun.sh script  
+       - v3.0
+         • Introduce G4 Particle Source, now mu+ beam is shot with momentum bite.
+
+
+5.- TODO
+       - multi thread 功能
+       - 参考B4DetectoreConstruction.hh，Geometry.hh中可以添加很多花样功能。
+       - P00PrimaryGenerator
+       -  • Introduced G4Particle Source generator.

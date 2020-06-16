@@ -1,0 +1,23 @@
+
+                       P00_muAerogelS1249
+                       mu+-->SilicaAerogel
+                       -------------------
+1.- HOW TO BUILD
+     use the automatic script to build from source code
+        % ./buildnClear.sh
+
+2.- HOW TO RUN
+     - quick script
+        % ./beamOn.sh $momentum
+                      $kinESigma
+                      $kinEWidthFlatTop
+                      $eventNum
+     - batch mode
+        % ./build/Application run1.mac
+        % ./build/Application run1.mac > run1.out
+     - Qt visualization mode
+        % ./build/Application
+       
+3.- MACROS
+     - momScan: used for automatically scan the beam momentum and draw muon stop distribution.
+     - yieldVSmom: use simple function to simulate the depth effect of muonium diffusion

@@ -1,0 +1,136 @@
+## Specify the viewer
+/vis/open OGL                                 # Use OpenGL
+#/vis/open VRML2FILE
+
+## Specify objects to draw
+/vis/drawVolume World
+/vis/scene/add/trajectories smooth
+/vis/scene/endOfEventAction accumulate
+
+## Add decorations
+##/vis/scene/add/axes                           # Axes (x=red, y=green, z=blue)
+/vis/viewer/set/viewpointThetaPhi 120 150
+/vis/viewer/scaleTo 1 1 1
+
+
+
+# Drawing style commands
+/vis/viewer/set/style surface
+/vis/viewer/set/auxiliaryEdge false
+/vis/viewer/set/lineSegmentsPerCircle 50     # Make circles smoothed
+/vis/viewer/set/hiddenEdge true
+/vis/viewer/set/hiddenMarker false
+/vis/viewer/set/globalLineWidthScale 1
+/vis/viewer/set/globalMarkerScale 1
+
+# Set Colors
+/vis/viewer/set/background 1. 1. 1. 0.0
+/vis/viewer/set/defaultColour 1  1  1  0.1
+/vis/viewer/set/defaultTextColour 0 0 0 1
+
+/vis/set/touchable World 0 PbCollimator 0
+/vis/touchable/set/colour 0.4 0.2 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0  PbCollim1 0
+/vis/touchable/set/colour 0.4 0.2 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0  PbCollim2 0
+/vis/touchable/set/colour 0.4 0.2 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 MylarWindow 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 MylarWin 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 MylarWrap1 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 MylarWrap0 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 AlPipe 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 AlHead 0
+/vis/touchable/set/colour 0.4 0.4 0.4 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 VC 0
+/vis/touchable/set/colour 0. 0.2 0.2 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 BC 0
+/vis/touchable/set/colour 0. 0.2 0.2 0.0
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 SUS  0
+/vis/touchable/set/colour 0. 0.2 0.2 0.5
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 Target 0
+/vis/touchable/set/colour 0. 0.5 0.5 0.3
+/vis/touchable/set/visibility true
+
+/vis/set/touchable World 0 DG 0
+/vis/touchable/set/colour 1 0 0 0.5
+/vis/touchable/set/visibility true
+
+
+# To draw only mu+ and/or Mu:
+/vis/filtering/trajectories/create/particleFilter
+/vis/filtering/trajectories/particleFilter-0/add mu+
+/vis/filtering/trajectories/particleFilter-0/add e+
+
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/list
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA e- 0.2 0.2 0.8 1
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA e+ 0.9 0.1 0.9 1
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA mu+ 0.9 0.8 0.2 1
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA Mu 1 0.1 0.1 1
+
+/tracking/storeTrajectory 1
+
+## Commonly used verbosity
+/run/verbose 1
+/tracking/verbose 1
+/control/verbose 0
+/event/verbose 0
+/material/verbose 0
+/process/verbose 0
+/vis/verbose 1
+
+
+# P A R T I C L E   S O U R C E
+ #/gps/particle mu+
+#/gps/pos/type Volume
+#/gps/pos/shape Ellipsoid
+#/gps/pos/centre 0.0  0.0  -20.0 cm
+#/gps/pos/halfx 6 mm
+#/gps/pos/halfy 6 mm
+#/gps/pos/halfz 3 mm
+
+#/gps/ang/type beam2d
+#/gps/ang/sigma_x 30. mrad
+#/gps/ang/sigma_y 30. mrad
+#/gps/direction 0.0  0.0  +1.0
+
+#/gps/ene/type Gauss
+
+#/gps/ene/mono 2.55 MeV
+#/gps/ene/sigma 0.03 MeV
+## sqrt((105.66+2.55MeV)^2-105.66^2)=23.353MeV/c
+
+#/run/beamOn 10
+
+## Invoke the application
+#/run/beamOn 10 eventAction.mac       # arg = 0; Only invokes initialization - no event generation
+                      # arg > 0; Specified number of events will be executed
